@@ -15,8 +15,22 @@ import { Loader2Icon, RotateCw, ZoomInIcon, ZoomOutIcon } from "lucide-react";
 // create new file in editor calls cors.json
 // run >>> // gsutil cors set cors.json gs://chat-with-pdf-challenge.appspot.com
 // https://firebase.google.com/docs/storage/web/download-files#cors_configuration
+//gsutil cors set cors.json gs://chat-with-pdf-challenge.appspot.com
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+pdfjs.GlobalWorkerOptions.workerSrc = "https://unpkg.com/pdfjs-dist@4.4.168/legacy/build/pdf.worker.min.mjs"
+
+if (typeof Promise.withResolvers === 'undefined') {
+  if (window)
+    // @ts-expect-error This does not exist outside of polyfill which this is doing
+    window.Promise.withResolvers = function () {
+      let resolve, reject;
+      const promise = new Promise((res, rej) => {
+        resolve = res;
+        reject = rej;
+      });
+      return { promise, resolve, reject };
+    };
+}
 
 function PdfView({ url }: { url: string }) {
   const [numPages, setNumPages] = useState<number>();

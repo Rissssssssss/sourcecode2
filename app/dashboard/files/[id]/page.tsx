@@ -3,6 +3,7 @@ import PdfView from "@/components/PdfView";
 import { adminDb } from "@/firebaseAdmin";
 import { auth } from "@clerk/nextjs/server";
 
+
 async function ChatToFilePage({
   params: { id },
 }: {
@@ -38,4 +39,5 @@ async function ChatToFilePage({
     </div>
   );
 }
+
 export default ChatToFilePage;
